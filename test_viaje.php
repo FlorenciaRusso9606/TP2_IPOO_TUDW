@@ -1,11 +1,24 @@
 <?php
 include "viaje.php";
-$responsable = new ResponsableV("467", "558", "John1", "Ogonowski");
+echo "Ingrese el número de empleado del responsable del viaje:\n";
+$numEmpleadoRV = trim(fgets(STDIN));
+echo "Ingrese el número de licencia del responsable del viaje:\n";
+$numLicenciaRV = trim(fgets(STDIN));
+echo "Ingrese el nombre del responsable del viaje:\n";
+$nombrerRV = trim(fgets(STDIN));
+echo "Ingrese el apellido del responsable del viaje:\n";
+$apellidoRV = trim(fgets(STDIN));
+$responsable = new ResponsableV($numEmpleadoRV, $numLicenciaRV, $nombrerRV, $apellidoRV);
+echo "Ingrese el código del viaje:\n";
+$codigoV = trim(fgets(STDIN));
+echo "Ingrese un destino:\n";
+$destino = trim(fgets(STDIN));
+echo "Ingrese la cantidad máxima de pasajeros:\n";
+$cantMaxPasajeros = trim(fgets(STDIN));
 $pasajero1= new Pasajero("Florencia", "Russo", 15123456, 123567);
 $pasajero2= new Pasajero ("Nicolás", "Flores", 15456789, 123869);
 $pasajeros = [$pasajero1, $pasajero2];
-$viaje = new Viaje("011", "Newa York", 158, $pasajeros, $responsable);
-
+$viaje = new Viaje($codigoV, $destino, $cantMaxPasajeros, $pasajeros, $responsable);
 do {
     echo "Menu:" . "\n" .
         "1- Cargar pasajero" . "\n" .

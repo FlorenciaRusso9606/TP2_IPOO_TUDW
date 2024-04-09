@@ -24,7 +24,11 @@ do {
         "1- Cargar pasajero" . "\n" .
         "2- Modificar información de pasajero" . "\n" .
         "3- Ver la información del viaje" . "\n" . 
-        "4- Salir" . "\n" .
+        "4- Modificar código de viaje" . "\n" . 
+        "5- Modificar destino" . "\n" . 
+        "6- Modificar cantidad máxima de pasajeros" . "\n" . 
+        "7- Modificar la información del responsable del vuelo" . "\n" .
+        "8- Salir" . "\n" .
         "Seleccione una opción:\n";
     $opcion = trim(fgets(STDIN));
     switch ($opcion) {
@@ -78,14 +82,43 @@ do {
             break;
         case "3":
             echo $viaje;
-            break;
+        break;
         case "4":
+            echo "Ingrese el nuevo código de viaje:\n";
+            $nuevoCodigoViaje = trim(fgets(STDIN));
+            $viaje->setCodigoViaje($nuevoCodigoViaje);
+        break;
+        case "5":
+            echo "Ingrese el nuevo destino:\n";
+            $nuevoDestion = trim(fgets(STDIN));
+            $viaje->setDestino($nuevoDestion);
+        break;
+        case "6":
+            echo "Ingrese la nueva cantidad máxima de pasajeros:\n";
+            $nuevaCantMaxPasajeros = trim(fgets(STDIN));
+            $viaje->setCantMaxcolPasajeros($nuevaCantMaxPasajeros);
+        break;
+        case "7":
+            echo "Ingrese el nuevo número de empleado del responsable del viaje:\n";
+            $nuevoNumEmpleadoRV = trim(fgets(STDIN));
+            echo "Ingrese el nuevo número de licencia del responsable del viaje:\n";
+            $nuevoNumLicenciaRV = trim(fgets(STDIN));
+            echo "Ingrese el nuevo nombre del responsable del viaje:\n";
+            $nuevoNombrerRV = trim(fgets(STDIN));
+            echo "Ingrese el nuevo apellido del responsable del viaje:\n";
+            $nuevoApellidoRV = trim(fgets(STDIN));
+            $viaje->getResponsableV()->setNumEmpleado($nuevoNumEmpleadoRV);
+            $viaje->getResponsableV()->setNumLicencia($nuevoNumLicenciaRV);
+            $viaje->getResponsableV()->setNombre($nuevoNombrerRV);
+            $viaje->getResponsableV()->setApellido($nuevoApellidoRV);
+        break;
+        case "8":
             echo "Saliendo...\n";
         break;
         default: 
             echo "La opción ingresada no es válida. Por favor, ingrese una opción válida.\n";
             break;
     }
-} while ($opcion != "4")
+} while ($opcion != "8")
 
 ?>

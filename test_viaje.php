@@ -107,10 +107,10 @@ do {
             $nuevoNombrerRV = trim(fgets(STDIN));
             echo "Ingrese el nuevo apellido del responsable del viaje:\n";
             $nuevoApellidoRV = trim(fgets(STDIN));
-            $viaje->getResponsableV()->setNumEmpleado($nuevoNumEmpleadoRV);
-            $viaje->getResponsableV()->setNumLicencia($nuevoNumLicenciaRV);
-            $viaje->getResponsableV()->setNombre($nuevoNombrerRV);
-            $viaje->getResponsableV()->setApellido($nuevoApellidoRV);
+            $viaje->getobjResponsableV()->setNumEmpleado($nuevoNumEmpleadoRV);
+            $viaje->getobjResponsableV()->setNumLicencia($nuevoNumLicenciaRV);
+            $viaje->getobjResponsableV()->setNombre($nuevoNombrerRV);
+            $viaje->getobjResponsableV()->setApellido($nuevoApellidoRV);
         break;
         case "8":
             echo "Saliendo...\n";

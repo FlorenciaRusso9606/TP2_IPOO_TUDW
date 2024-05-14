@@ -1,5 +1,9 @@
 <?php
-include "viaje.php";
+include_once "pasajero.php";
+include_once "pasajeroVip.php";
+include_once "pasajeroEspecial.php";
+include_once "responsableV.php";
+include_once "viaje.php";
 echo "Ingrese el número de empleado del responsable del viaje:\n";
 $numEmpleadoRV = trim(fgets(STDIN));
 echo "Ingrese el número de licencia del responsable del viaje:\n";
@@ -15,10 +19,13 @@ echo "Ingrese un destino:\n";
 $destino = trim(fgets(STDIN));
 echo "Ingrese la cantidad máxima de pasajeros:\n";
 $cantMaxPasajeros = trim(fgets(STDIN));
-$pasajero1= new Pasajero("Florencia", "Russo", 15123456, 123567);
-$pasajero2= new Pasajero ("Nicolás", "Flores", 15456789, 123869);
-$pasajeros = [$pasajero1, $pasajero2];
-$viaje = new Viaje($codigoV, $destino, $cantMaxPasajeros, $pasajeros, $responsable);
+echo "Ingrese el costo del viaje:\n";
+$costoViaje = trim(fgets(STDIN));
+$pasajeros=[];
+//public function __construct($codigo_viaje, $destino, $cant_max_colPasajeros, $colPasajeros, $objResponsableV, $costoViaje, $costosAbonados)
+$viaje = new Viaje($codigoV, $destino, $cantMaxPasajeros, $pasajeros, $responsable, $costoViaje,0);
+$numTicket = 0;
+$numAsiento = 0;
 do {
     echo "Menu:" . "\n" .
         "1- Cargar pasajero" . "\n" .
@@ -41,7 +48,9 @@ do {
             $numDocPasajero = trim(fgets(STDIN));
             echo "Ingrese el teléfono del pasajero:\n";
             $telPasajero = trim(fgets(STDIN));
-            $nuevoPasajero = new Pasajero($nombrePasajero, $apellidoPasajero, $numDocPasajero, $telPasajero);
+            $numTicket = $numTicket+1;
+            $numAsiento = $numAsiento+1;
+            $nuevoPasajero = new Pasajero($nombrePasajero, $apellidoPasajero, $numDocPasajero, $telPasajero, $numAsiento, $numTicket);
             $cargado = $viaje->cargarPasajero($nuevoPasajero);
             if ($cargado == true) {
                 echo "El pasajero no ha podido ser cargado. Puede ser que el pasajero ya haya sido cargado o que el viaje haya completado la cantidad máxima de pasajeros.\n";

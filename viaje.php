@@ -6,16 +6,16 @@
  * Modificar la clase Viaje para que ahora los colPasajeros sean un objeto que tenga los atributos nombre, apellido, numero de documento y teléfono. El viaje ahora contiene una referencia a una colección de objetos de la clase Pasajero. También se desea guardar la información de la persona responsable de realizar el viaje, para ello cree una clase objResponsableV que registre el número de empleado, número de licencia, nombre y apellido. La clase Viaje debe hacer referencia al responsable de realizar el viaje.
  * Implementar las operaciones que permiten modificar el nombre, apellido y teléfono de un pasajero. Luego implementar la operación que agrega los colPasajeros al viaje, solicitando por consola la información de los mismos. Se debe verificar que el pasajero no este cargado mas de una vez en el viaje. De la misma forma cargue la información del responsable del viaje.
  */
-include "pasajero.php";
-include "responsableV.php";
 class Viaje{
     private $codigo_viaje;
     private $destino;
     private $cant_max_colPasajeros;
     private $colPasajeros;
     private $objResponsableV;
+    private $costoViaje;
+    private $costosAbonados;
 
-    public function __construct($codigo_viaje, $destino, $cant_max_colPasajeros, $colPasajeros, $objResponsableV)
+    public function __construct($codigo_viaje, $destino, $cant_max_colPasajeros, $colPasajeros, $objResponsableV, $costoViaje, $costosAbonados)
     {
         $this->codigo_viaje=$codigo_viaje;
         $this->destino=$destino;
@@ -38,6 +38,12 @@ class Viaje{
     public function getobjResponsableV(){
         return $this->objResponsableV;
     }
+    public function getCostoViaje(){
+        return  $this->costoViaje;
+    }
+    public function getCostosAbonados(){
+        return  $this->costosAbonados;
+    }
     public function setCodigoViaje($codigo_viaje){
         $this->codigo_viaje = $codigo_viaje;
     }
@@ -52,6 +58,12 @@ class Viaje{
     }
     public function setobjResponsableV($objResponsableV){
         $this->objResponsableV = $objResponsableV;
+    }
+    public function setCostoViaje($costoViaje){
+        $this->costoViaje = $costoViaje;
+    }
+    public function setCostosAbonados($costosAbonados){
+        $this->costosAbonados = $costosAbonados;
     }
     public function pasajeroEncontrado($pasajero){
         $pasajeros = $this->getcolPasajeros();
@@ -98,6 +110,28 @@ class Viaje{
         }
            return $cargado;
     }
+    public function hayPasajesDisponible() {
+        $hayLugar= false;
+       if (count($this->getColPasajeros())<$this->getCantMaxcolPasajeros()){
+        $hayLugar = true;
+       }
+       return $hayLugar;
+    }
+    public function venderPasaje($objPasajero){
+        $hayLugar= $this->hayPasajesDisponible();
+        $costoAAbonar=0;
+        $cargado = false;
+        if($hayLugar){
+            $cargado=$this->cargarPasajero($objPasajero);
+           if($cargado == false){
+                $costoAAbonar = $this->getCostoViaje() + ($this->getCostoViaje() * $objPasajero->darPorcentajeIncremento());
+                $costosAbonados = $this->getCostosAbonados();
+                $costosAbonados = $costosAbonados + $costoAAbonar;
+                $this->setCostosAbonados($costosAbonados);
+            }
+        return $costoAAbonar;
+    }
+}
     private function getStringArray($array){
         $cadena = "";
         foreach($array as $elemento){

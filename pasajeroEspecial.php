@@ -30,7 +30,7 @@ class PasajeroEspecial extends Pasajero{
         $this->requiereComidaEspecial =$requiereComidaEspecial;
     }
     public function darPorcentajeIncremento() {
-        $incremento = parent::darPorcentajeIncremento();
+        $incremento =0;
         if ($this->getSillaRuedas() && $this->getAsistencia() && $this->getComidaEspecial()) {
             $incremento= 0.3;
         } elseif ($this->getSillaRuedas() || $this->getAsistencia() || $this->getComidaEspecial()) {

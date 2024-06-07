@@ -62,9 +62,14 @@ class Pasajero{
     public function nuevoTelefono($nuevoTelefono){
         $this->telefono = $nuevoTelefono;
     }
-    public function darPorcentajeIncremento() {
-        $incremento= 0.1;
-        return $incremento;
+    
+    public function cargar($nom, $ap, $numDoc, $tel, $numAs, $numTicket) {
+        $this->setNombre($nom);
+        $this->setApellido($ap);
+        $this->setNumDoc($numDoc);
+        $this->setTelefono($tel);
+        $this->setNumAsiento($numAs);
+        $this->setNumTicket($numTicket);
     }
     public function __toString()
     {

@@ -1,11 +1,5 @@
 <?php
-/**
- * La empresa de Transporte de colPasajeros “Viaje Feliz” quiere registrar la información referente a sus viajes. De cada viaje se precisa almacenar el código del mismo, destino, cantidad máxima de colPasajeros y los colPasajeros del viaje. 
- * Realice la implementación de la clase Viaje e implemente los métodos necesarios para modificar los atributos de dicha clase (incluso los datos de los colPasajeros). Utilice clases y arreglos  para   almacenar la información correspondiente a los colPasajeros. Cada pasajero guarda  su “nombre”, “apellido” y “numero de documento”. 
- * Implementar un script testViaje.php que cree una instancia de la clase Viaje y presente un menú que permita cargar la información del viaje, modificar y ver sus datos. 
- * Modificar la clase Viaje para que ahora los colPasajeros sean un objeto que tenga los atributos nombre, apellido, numero de documento y teléfono. El viaje ahora contiene una referencia a una colección de objetos de la clase Pasajero. También se desea guardar la información de la persona responsable de realizar el viaje, para ello cree una clase objResponsableV que registre el número de empleado, número de licencia, nombre y apellido. La clase Viaje debe hacer referencia al responsable de realizar el viaje.
- * Implementar las operaciones que permiten modificar el nombre, apellido y teléfono de un pasajero. Luego implementar la operación que agrega los colPasajeros al viaje, solicitando por consola la información de los mismos. Se debe verificar que el pasajero no este cargado mas de una vez en el viaje. De la misma forma cargue la información del responsable del viaje.
- */
+
 class Viaje{
     private $codigo_viaje;
     private $destino;
@@ -14,14 +8,18 @@ class Viaje{
     private $objResponsableV;
     private $costoViaje;
     private $costosAbonados;
+    private $objEmpresa;
 
-    public function __construct($codigo_viaje, $destino, $cant_max_colPasajeros, $colPasajeros, $objResponsableV, $costoViaje, $costosAbonados)
+    public function __construct($codigo_viaje, $destino, $cant_max_colPasajeros, $colPasajeros, $objResponsableV, $costoViaje, $costosAbonados, $objEmpresa)
     {
         $this->codigo_viaje=$codigo_viaje;
         $this->destino=$destino;
         $this->cant_max_colPasajeros=$cant_max_colPasajeros;
         $this->colPasajeros=$colPasajeros;
         $this->objResponsableV=$objResponsableV;
+        $this->costoViaje=$costoViaje;
+        $this->costosAbonados=$costosAbonados;
+        $this->objEmpresa = $objEmpresa;
     }
     public function getCodigoViaje(){
         return $this->codigo_viaje;
@@ -44,6 +42,9 @@ class Viaje{
     public function getCostosAbonados(){
         return  $this->costosAbonados;
     }
+    public function getObjEmpresa(){
+        return  $this->objEmpresa;
+    }
     public function setCodigoViaje($codigo_viaje){
         $this->codigo_viaje = $codigo_viaje;
     }
@@ -65,6 +66,15 @@ class Viaje{
     public function setCostosAbonados($costosAbonados){
         $this->costosAbonados = $costosAbonados;
     }
+    public function setObjEmpresa($objEmpresa){
+        $this->objEmpresa = $objEmpresa;
+    }
+    public function modificarViaje($codigo, $destino, $cantMax, $costoViaje){
+        $this->setCodigoViaje($codigo);
+        $this->setDestino($destino);
+        $this->setCantMaxcolPasajeros($cantMax);
+        $this->setCostoViaje($costoViaje);
+    }
     public function pasajeroEncontrado($pasajero){
         $pasajeros = $this->getcolPasajeros();
         $i=0;
@@ -75,9 +85,12 @@ class Viaje{
             }
             $i++;
         }
-        return $encontrado;
+        if(!$encontrado){
+            $i=-1;
+        };
+        return $i;
     }
-    public function cambiarDatosPasajero($numDocPasajero, $nuevoNombre, $nuevoApellido, $nuevoTelefono){
+    /*public function cambiarDatosPasajero($numDocPasajero, $nuevoNombre, $nuevoApellido, $nuevoTelefono){
         $pasajeros = $this->getcolPasajeros();
         $i=0;
         while($i<count($pasajeros)){
@@ -89,6 +102,7 @@ class Viaje{
             $i++;
         }
     }
+*/
     public function cargarPasajero($pasajero){
         $i=0;
         $pasajeros = $this->getcolPasajeros();
@@ -122,6 +136,7 @@ class Viaje{
         $costoAAbonar=0;
         $cargado = false;
         if($hayLugar){
+            $objPasajero->setNumAsiento(count($this->getcolPasajeros())+1);
             $cargado=$this->cargarPasajero($objPasajero);
            if($cargado == false){
                 $costoAAbonar = $this->getCostoViaje() + ($this->getCostoViaje() * $objPasajero->darPorcentajeIncremento());
@@ -131,6 +146,17 @@ class Viaje{
             }
         return $costoAAbonar;
     }
+}
+/**SE DEBE PONER COLPASAJEROS ACÁ? */
+public function cargar($codViaje, $dest, $canMaxPas, $colPas,$respV, $costoViaje, $costosAb, $objEmp) {
+    $this->setCodigoViaje($codViaje);
+    $this->getDestino($dest);
+    $this->setCantMaxcolPasajeros($canMaxPas);
+    $this->setcolPasajeros($colPas);
+    $this->setobjResponsableV($respV);
+    $this->setCostoViaje($costoViaje);
+    $this->setCostosAbonados($costosAb);
+    $this->setObjEmpresa($objEmp);
 }
     private function getStringArray($array){
         $cadena = "";
